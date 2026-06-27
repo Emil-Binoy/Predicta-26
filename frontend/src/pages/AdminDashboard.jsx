@@ -57,6 +57,21 @@ const AdminDashboard = () => {
         }
     };
 
+    const handleDelete = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this participant?')) return;
+        try {
+            const res = await axios.delete(`${import.meta.env.VITE_API_URL}/api/admin/participants/${id}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            if (res.data.success) {
+                toast.success('Participant deleted successfully');
+                setParticipants(participants.filter(p => p._id !== id));
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'Failed to delete participant');
+        }
+    };
+
     if (!token) {
         return (
             <div className="pt-24 pb-12 min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
@@ -122,10 +137,11 @@ const AdminDashboard = () => {
                             <tr className="border-b border-gray-600 bg-[rgba(255,255,255,0.02)]">
                                 <th className="p-4 text-gray-300 font-semibold rounded-tl-lg">Name</th>
                                 <th className="p-4 text-gray-300 font-semibold">Student ID</th>
-                                <th className="p-4 text-gray-300 font-semibold">Course/Batch</th>
+                                <th className="p-4 text-gray-300 font-semibold">Course/Batch/Sem</th>
                                 <th className="p-4 text-[#d4af37] font-semibold text-center">Predicted Team</th>
                                 <th className="p-4 text-[#50c878] font-semibold text-center">Predicted Goals</th>
-                                <th className="p-4 text-gray-300 font-semibold rounded-tr-lg">Date</th>
+                                <th className="p-4 text-gray-300 font-semibold">Date</th>
+                                <th className="p-4 text-gray-300 font-semibold rounded-tr-lg">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -133,11 +149,19 @@ const AdminDashboard = () => {
                                 <tr key={user._id} className="border-b border-gray-700/50 hover:bg-[rgba(255,255,255,0.03)] transition-colors">
                                     <td className="p-4 text-white font-medium">{user.name}</td>
                                     <td className="p-4 text-gray-400">{user.studentId}</td>
-                                    <td className="p-4 text-gray-400">{user.course} - {user.batch}</td>
+                                    <td className="p-4 text-gray-400">{user.course} - {user.batch} - SEM {user.semester}</td>
                                     <td className="p-4 text-[#d4af37] font-bold text-center bg-[rgba(212,175,55,0.05)]">{user.winningTeam || 'Pending'}</td>
                                     <td className="p-4 text-[#50c878] font-bold text-center bg-[rgba(80,200,120,0.05)]">{user.winningMargin || 'Pending'}</td>
                                     <td className="p-4 text-sm text-gray-500">
                                         {new Date(user.createdAt).toLocaleDateString()}
+                                    </td>
+                                    <td className="p-4 text-center">
+                                        <button 
+                                            onClick={() => handleDelete(user._id)}
+                                            className="px-3 py-1 bg-red-500/10 text-red-500 rounded hover:bg-red-500 hover:text-white transition-colors text-sm"
+                                        >
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                             ))}

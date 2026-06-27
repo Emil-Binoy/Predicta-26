@@ -145,4 +145,19 @@ const getAnalytics = async (req, res) => {
     }
 };
 
-module.exports = { getParticipants, getDashboardStats, setMatchResult, getWinners, getAnalytics };
+// @desc    Delete a participant
+// @route   DELETE /api/admin/participants/:id
+// @access  Private/Admin
+const deleteParticipant = async (req, res) => {
+    try {
+        const participant = await User.findByIdAndDelete(req.params.id);
+        if (!participant) {
+            return res.status(404).json({ success: false, message: 'Participant not found' });
+        }
+        res.json({ success: true, message: 'Participant deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+module.exports = { getParticipants, getDashboardStats, setMatchResult, getWinners, getAnalytics, deleteParticipant };
