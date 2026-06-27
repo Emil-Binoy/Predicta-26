@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { useEffect } from 'react';
+import axios from 'axios';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
@@ -8,6 +10,27 @@ import Prediction from './pages/Prediction';
 import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
+  useEffect(() => {
+    const checkParticipant = async () => {
+      const predictionId = localStorage.getItem('predictionId');
+      if (predictionId) {
+        try {
+          const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/verify/${predictionId}`);
+          if (res.data.success && !res.data.exists) {
+            localStorage.removeItem('predictionId');
+            localStorage.removeItem('winningTeam');
+            localStorage.removeItem('predictedGoals');
+            localStorage.removeItem('isPredicted');
+            window.location.reload();
+          }
+        } catch (error) {
+          console.error('Failed to verify participant', error);
+        }
+      }
+    };
+    checkParticipant();
+  }, []);
+
   return (
     <Router>
       <div className="min-h-screen flex flex-col text-white">

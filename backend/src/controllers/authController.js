@@ -133,4 +133,22 @@ const submitPrediction = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, loginAdmin, submitPrediction };
+// @desc    Verify if participant exists
+// @route   GET /api/auth/verify/:predictionId
+// @access  Public
+const verifyParticipant = async (req, res) => {
+    try {
+        const { predictionId } = req.params;
+        const user = await User.findOne({ predictionId });
+        if (user) {
+            res.json({ success: true, exists: true });
+        } else {
+            res.json({ success: true, exists: false });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Server Error' });
+    }
+};
+
+module.exports = { registerUser, loginAdmin, submitPrediction, verifyParticipant };
