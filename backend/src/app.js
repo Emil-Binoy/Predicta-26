@@ -4,7 +4,11 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
-require('dotenv').config();
+const dotenv = require('dotenv');
+const path = require('path');
+const envFile = process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : '.env.development';
+dotenv.config({ path: path.resolve(__dirname, `../${envFile}`) });
+dotenv.config(); // fallback to .env if specific file is missing
 
 const app = express();
 

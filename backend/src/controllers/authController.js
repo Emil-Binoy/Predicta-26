@@ -41,8 +41,15 @@ const registerUser = async (req, res) => {
         }
 
         // 3. Generate Prediction ID (e.g., P26-0001)
-        const count = await User.countDocuments();
-        const predictionId = `P26-${String(count + 1).padStart(4, '0')}`;
+        const lastUser = await User.findOne({}, {}, { sort: { 'predictionId': -1 } });
+        let newIdNumber = 1;
+        if (lastUser && lastUser.predictionId) {
+            const lastIdParts = lastUser.predictionId.split('-');
+            if (lastIdParts.length === 2 && !isNaN(lastIdParts[1])) {
+                newIdNumber = parseInt(lastIdParts[1], 10) + 1;
+            }
+        }
+        const predictionId = `P26-${String(newIdNumber).padStart(4, '0')}`;
 
         // 4. Save User
         const user = await User.create({
