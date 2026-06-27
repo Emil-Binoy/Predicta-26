@@ -106,11 +106,12 @@ const Prediction = () => {
                             <div>
                                 <label className="block text-sm font-medium text-gray-300 mb-1">Predict the Goals</label>
                                 <input
-                                    type="text"
+                                    type="number"
+                                    min="0"
                                     value={predictedGoals}
                                     onChange={(e) => setPredictedGoals(e.target.value)}
                                     className="w-full bg-[#1c2541] border border-gray-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-[#d4af37] focus:outline-none transition-all"
-                                    placeholder="e.g. 2 Goals"
+                                    placeholder="e.g. 2"
                                 />
                             </div>
 

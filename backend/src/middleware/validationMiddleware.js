@@ -13,7 +13,7 @@ const registerValidation = [
 const predictValidation = [
     check('predictionId', 'Prediction ID is required').not().isEmpty(),
     check('winningTeam', 'Winning team is required').not().isEmpty(),
-    check('winningMargin', 'Winning margin is required').not().isEmpty()
+    check('winningMargin', 'Winning margin must be a valid integer').isInt()
 ];
 
 module.exports = { registerValidation, predictValidation };
