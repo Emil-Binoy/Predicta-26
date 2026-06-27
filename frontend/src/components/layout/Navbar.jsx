@@ -23,7 +23,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'glass-nav py-3' : 'bg-transparent py-5'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-black/30 backdrop-blur-sm py-3' : 'bg-transparent py-5'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <div className="flex-shrink-0">
@@ -75,9 +75,9 @@ const Navbar = () => {
         <motion.div 
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden glass-nav absolute w-full"
+          className="md:hidden bg-black/30 backdrop-blur-sm absolute w-full"
         >
-          <div className="px-4 pt-2 pb-6 space-y-2 mt-2">
+          <div className="px-4 pt-2 pb-6 space-y-2 mt-2 bg-black ">
             {links.map((link) => {
               const isActive = location.pathname === link.path;
               return (
@@ -86,7 +86,7 @@ const Navbar = () => {
                   to={link.path}
                   onClick={() => setIsOpen(false)}
                   className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
-                    isActive ? 'bg-[rgba(255,255,255,0.05)] text-white border-l-4 border-[#00C853]' : 'text-gray-400 hover:text-white hover:bg-[rgba(255,255,255,0.03)] border-l-4 border-transparent'
+                    isActive ? 'bg-gray-900  text-white border-l-4 border-[#00C853]' : 'text-gray-400 hover:text-white hover:bg-[rgba(255,255,255,0.03)] border-l-4 border-transparent'
                   }`}
                 >
                   {link.name}
