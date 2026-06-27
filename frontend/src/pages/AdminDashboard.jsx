@@ -21,7 +21,7 @@ const AdminDashboard = () => {
         e.preventDefault();
         setIsLoggingIn(true);
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/admin/login', { username, password });
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/admin/login`, { username, password });
             if (res.data.success) {
                 toast.success('Login successful!');
                 localStorage.setItem('adminToken', res.data.token);
@@ -43,7 +43,7 @@ const AdminDashboard = () => {
     const fetchParticipants = async () => {
         setIsLoading(true);
         try {
-            const res = await axios.get('http://localhost:5000/api/admin/participants', {
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/participants`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (res.data.success) {
