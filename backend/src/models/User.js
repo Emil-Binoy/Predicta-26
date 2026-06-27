@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
     phone: {
         type: String,
         required: true,
@@ -39,10 +44,6 @@ const userSchema = new mongoose.Schema({
     winningMargin: {
         type: String,
         default: null
-    },
-    idCardImage: {
-        type: String,
-        required: true
     },
     isVerified: {
         type: Boolean,

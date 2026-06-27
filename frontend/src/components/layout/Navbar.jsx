@@ -14,11 +14,12 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const hasRegistered = localStorage.getItem('predictionId') || location.state?.predictionId || location.pathname === '/predict';
+
   const links = [
     { name: 'Home', path: '/' },
-    { name: 'Register', path: '/register' },
-    { name: 'Predict', path: '/predict' },
-    { name: 'Admin', path: '/admin' }
+    ...(!hasRegistered ? [{ name: 'Register', path: '/register' }] : []),
+    ...(hasRegistered ? [{ name: 'Predict', path: '/predict' }] : [])
   ];
 
   return (

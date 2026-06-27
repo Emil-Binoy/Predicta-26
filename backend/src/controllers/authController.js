@@ -1,6 +1,5 @@
 const User = require('../models/User');
 const Admin = require('../models/Admin');
-const { extractStudentId } = require('../services/ocrService');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 
@@ -19,28 +18,21 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ success: false, errors: errors.array() });
         }
 
-        const { name, phone, course, semester, batch } = req.body;
+        const { name, studentId, email, phone, course, semester, batch } = req.body;
 
-        if (!req.file) {
-            return res.status(400).json({ success: false, message: 'ID Card image is required' });
-        }
-
-        const imagePath = req.file.path;
-        
-        // 1. Run OCR
-        const studentId = await extractStudentId(imagePath);
-        
         if (!studentId) {
-            return res.status(400).json({ 
-                success: false, 
-                message: "Couldn't detect Student ID. Please upload a clearer image." 
-            });
+            return res.status(400).json({ success: false, message: 'Student ID is required' });
         }
 
         // 2. Check duplicates
         const existingStudent = await User.findOne({ studentId });
         if (existingStudent) {
             return res.status(400).json({ success: false, message: 'This Student ID has already been registered.' });
+        }
+
+        const existingEmail = await User.findOne({ email });
+        if (existingEmail) {
+            return res.status(400).json({ success: false, message: 'This Email has already been registered.' });
         }
 
         const existingPhone = await User.findOne({ phone });
@@ -57,11 +49,11 @@ const registerUser = async (req, res) => {
             predictionId,
             studentId,
             name,
+            email,
             phone,
             course,
             semester,
-            batch,
-            idCardImage: imagePath
+            batch
         });
 
         res.status(201).json({
@@ -85,7 +77,7 @@ const registerUser = async (req, res) => {
 const loginAdmin = async (req, res) => {
     try {
         const { username, password } = req.body;
-        
+
         const admin = await Admin.findOne({ username });
 
         if (admin && (await admin.matchPassword(password))) {

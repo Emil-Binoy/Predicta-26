@@ -2,6 +2,8 @@ const { check } = require('express-validator');
 
 const registerValidation = [
     check('name', 'Name is required').not().isEmpty(),
+    check('email', 'Please include a valid email').isEmail(),
+    check('studentId', 'Student ID is required').not().isEmpty(),
     check('phone', 'Please include a valid phone number').isLength({ min: 10 }),
     check('course', 'Course is required').not().isEmpty(),
     check('semester', 'Semester is required').not().isEmpty(),
