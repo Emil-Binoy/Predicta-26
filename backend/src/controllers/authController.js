@@ -18,17 +18,7 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ success: false, errors: errors.array() });
         }
 
-        const { name, studentId, email, phone, course, semester, batch } = req.body;
-
-        if (!studentId) {
-            return res.status(400).json({ success: false, message: 'Student ID is required' });
-        }
-
-        // 2. Check duplicates
-        const existingStudent = await User.findOne({ studentId });
-        if (existingStudent) {
-            return res.status(400).json({ success: false, message: 'This Student ID has already been registered.' });
-        }
+        const { name, email, phone, course, semester, batch } = req.body;
 
         const existingEmail = await User.findOne({ email });
         if (existingEmail) {
@@ -54,7 +44,6 @@ const registerUser = async (req, res) => {
         // 4. Save User
         const user = await User.create({
             predictionId,
-            studentId,
             name,
             email,
             phone,
@@ -67,7 +56,6 @@ const registerUser = async (req, res) => {
             success: true,
             data: {
                 predictionId: user.predictionId,
-                studentId: user.studentId,
                 name: user.name
             }
         });

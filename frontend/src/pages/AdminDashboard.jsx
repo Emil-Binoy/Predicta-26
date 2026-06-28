@@ -136,7 +136,6 @@ const AdminDashboard = () => {
                         <thead>
                             <tr className="border-b border-gray-600 bg-[rgba(255,255,255,0.02)]">
                                 <th className="p-4 text-gray-300 font-semibold rounded-tl-lg">Name</th>
-                                <th className="p-4 text-gray-300 font-semibold">Student ID</th>
                                 <th className="p-4 text-gray-300 font-semibold">Course/Batch/Sem</th>
                                 <th className="p-4 text-[#d4af37] font-semibold text-center">Predicted Team</th>
                                 <th className="p-4 text-[#50c878] font-semibold text-center">Predicted Goals</th>
@@ -148,7 +147,6 @@ const AdminDashboard = () => {
                             {participants.map((user) => (
                                 <tr key={user._id} className="border-b border-gray-700/50 hover:bg-[rgba(255,255,255,0.03)] transition-colors">
                                     <td className="p-4 text-white font-medium">{user.name}</td>
-                                    <td className="p-4 text-gray-400">{user.studentId}</td>
                                     <td className="p-4 text-gray-400">{user.course} - {user.batch} - SEM {user.semester}</td>
                                     <td className="p-4 text-[#d4af37] font-bold text-center bg-[rgba(212,175,55,0.05)]">{user.winningTeam || 'Pending'}</td>
                                     <td className="p-4 text-[#50c878] font-bold text-center bg-[rgba(80,200,120,0.05)]">{user.winningMargin || 'Pending'}</td>

@@ -67,18 +67,6 @@ const Registration = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-1">Student ID</label>
-                            <input
-                                {...register('studentId', { required: 'Student ID is required' })}
-                                className="w-full bg-[#1c2541] border border-gray-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-[#d4af37] focus:outline-none transition-all"
-                                placeholder="ID Written on your ID card"
-                            />
-                            {errors.studentId && <p className="text-red-400 text-sm mt-1">{errors.studentId.message}</p>}
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
                             <label className="block text-sm font-medium text-gray-300 mb-1">Email</label>
                             <input
                                 {...register('email', { required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email format' } })}
@@ -87,7 +75,9 @@ const Registration = () => {
                             />
                             {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>}
                         </div>
+                    </div>
 
+                    <div className="grid grid-cols-1  gap-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-300 mb-1">Phone Number</label>
                             <input

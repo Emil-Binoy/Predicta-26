@@ -19,7 +19,6 @@ const getParticipants = async (req, res) => {
             const searchRegex = new RegExp(req.query.search, 'i');
             filter.$or = [
                 { name: searchRegex },
-                { studentId: searchRegex },
                 { predictionId: searchRegex },
                 { phone: searchRegex }
             ];

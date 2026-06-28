@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Registration from './pages/Registration';
 import Prediction from './pages/Prediction';
 import AdminDashboard from './pages/AdminDashboard';
+import LearnMore from './pages/LearnMore';
 
 function App() {
   useEffect(() => {
@@ -39,6 +40,7 @@ function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/learn-more" element={<LearnMore />} />
             <Route path="/register" element={<Registration />} />
             <Route path="/predict" element={<Prediction />} />
             <Route path="/admin/*" element={<AdminDashboard />} />

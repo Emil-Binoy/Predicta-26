@@ -18,6 +18,7 @@ const Navbar = () => {
 
   const links = [
     { name: 'Home', path: '/' },
+    { name: 'Learn More', path: '/learn-more' },
     ...(!hasRegistered ? [{ name: 'Register', path: '/register' }] : []),
     ...(hasRegistered ? [{ name: 'Predict', path: '/predict' }] : [])
   ];
@@ -31,7 +32,7 @@ const Navbar = () => {
               Predicta 26
             </Link>
           </div>
-          
+
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
               {links.map((link) => {
@@ -72,7 +73,7 @@ const Navbar = () => {
       </div>
 
       {isOpen && (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           className="md:hidden bg-black/30 backdrop-blur-sm absolute w-full"
@@ -85,9 +86,8 @@ const Navbar = () => {
                   key={link.name}
                   to={link.path}
                   onClick={() => setIsOpen(false)}
-                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
-                    isActive ? 'bg-gray-900  text-white border-l-4 border-[#00C853]' : 'text-gray-400 hover:text-white hover:bg-[rgba(255,255,255,0.03)] border-l-4 border-transparent'
-                  }`}
+                  className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${isActive ? 'bg-gray-900  text-white border-l-4 border-[#00C853]' : 'text-gray-400 hover:text-white hover:bg-[rgba(255,255,255,0.03)] border-l-4 border-transparent'
+                    }`}
                 >
                   {link.name}
                 </Link>
