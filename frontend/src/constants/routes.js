@@ -3,5 +3,5 @@ export const ROUTES = {
   LEARN_MORE: '/learn-more',
   REGISTER: '/register',
   PREDICT: '/predict',
-  ADMIN: '/admin-dashboard',
+  ADMIN: '/admin',
 };
