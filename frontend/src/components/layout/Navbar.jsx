@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { getStorageItem } from '../../utils/storage';
+import { STORAGE_KEYS } from '../../constants/storageKeys';
+import { ROUTES } from '../../constants/routes';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,13 +17,13 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const hasRegistered = localStorage.getItem('predictionId') || location.state?.predictionId || location.pathname === '/predict';
+  const hasRegistered = getStorageItem(STORAGE_KEYS.PREDICTION_ID) || location.state?.predictionId || location.pathname === ROUTES.PREDICT;
 
   const links = [
-    { name: 'Home', path: '/' },
-    { name: 'Learn More', path: '/learn-more' },
-    ...(!hasRegistered ? [{ name: 'Register', path: '/register' }] : []),
-    ...(hasRegistered ? [{ name: 'Predict', path: '/predict' }] : [])
+    { name: 'Home', path: ROUTES.HOME },
+    { name: 'Learn More', path: ROUTES.LEARN_MORE },
+    ...(!hasRegistered ? [{ name: 'Register', path: ROUTES.REGISTER }] : []),
+    ...(hasRegistered ? [{ name: 'Predict', path: ROUTES.PREDICT }] : [])
   ];
 
   return (
@@ -28,7 +31,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <div className="flex-shrink-0">
-            <Link to="/" className="text-3xl font-bebas font-bold text-gradient-primary tracking-wider">
+            <Link to={ROUTES.HOME} className="text-3xl font-bebas font-bold text-gradient-primary tracking-wider">
               Predicta 26
             </Link>
           </div>
@@ -54,7 +57,6 @@ const Navbar = () => {
                         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                       />
                     )}
-                    {/* Hover underline effect for non-active links */}
                     {!isActive && (
                       <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-white opacity-0 group-hover:opacity-100 transform scale-x-0 group-hover:scale-x-100 transition-all duration-300 origin-left" />
                     )}

@@ -1,7 +1,13 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import Button from '../../components/ui/Button';
+import { getStorageItem } from '../../utils/storage';
+import { STORAGE_KEYS } from '../../constants/storageKeys';
+import { ROUTES } from '../../constants/routes';
 
 const Home = () => {
+  const hasRegistered = !!getStorageItem(STORAGE_KEYS.PREDICTION_ID);
+  const isPredicted = getStorageItem(STORAGE_KEYS.IS_PREDICTED) === 'true';
+
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden pt-20">
 
@@ -39,33 +45,24 @@ const Home = () => {
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row gap-6 justify-center w-full sm:w-auto">
-          {!localStorage.getItem('predictionId') ? (
-            <a
-              href="/register"
-              className="w-full sm:w-auto px-10 py-4 bg-gradient-button-primary text-[#090909] font-bold text-lg rounded-full glow-hover transition-all duration-300 flex items-center justify-center gap-2"
-            >
+          {!hasRegistered ? (
+            <Button variant="primary" to={ROUTES.REGISTER}>
               Register Now
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
-            </a>
+            </Button>
           ) : (
-            <a
-              href="/predict"
-              className="w-full sm:w-auto px-10 py-4 bg-gradient-button-primary text-[#090909] font-bold text-lg rounded-full glow-hover transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              {localStorage.getItem('isPredicted') === 'true' ? 'View Prediction 🔒' : 'Predict Now'}
+            <Button variant="primary" to={ROUTES.PREDICT}>
+              {isPredicted ? 'View Prediction 🔒' : 'Predict Now'}
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
-            </a>
+            </Button>
           )}
-          <Link 
-            to="/learn-more" 
-            className="w-full sm:w-auto px-10 py-4 border-2 border-[#0057D9] text-white font-bold text-lg rounded-full hover:bg-[rgba(0,87,217,0.15)] hover:border-[#E31E24] transition-all duration-300"
-          >
+          <Button variant="secondary" to={ROUTES.LEARN_MORE} className="text-center">
             Learn More
-          </Link>
+          </Button>
         </div>
       </motion.div>
     </div>
