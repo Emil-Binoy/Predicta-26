@@ -24,9 +24,8 @@ const CTASection = ({ hasRegistered }) => {
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
           {!hasRegistered && (
-            <Button variant="success" to={ROUTES.REGISTER}>
-              Register Now
-              <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+            <Button variant="success" disabled>
+              Registration Closed
             </Button>
           )}
           <Button variant="secondary" to={ROUTES.HOME}>

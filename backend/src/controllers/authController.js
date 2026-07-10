@@ -12,58 +12,10 @@ const generateToken = (id) => {
 // @route   POST /api/auth/register
 // @access  Public
 const registerUser = async (req, res) => {
-    try {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ success: false, errors: errors.array() });
-        }
-
-        const { name, email, phone, course, semester, batch } = req.body;
-
-        const existingEmail = await User.findOne({ email });
-        if (existingEmail) {
-            return res.status(400).json({ success: false, message: 'This Email has already been registered.' });
-        }
-
-        const existingPhone = await User.findOne({ phone });
-        if (existingPhone) {
-            return res.status(400).json({ success: false, message: 'This Phone number has already been registered.' });
-        }
-
-        // 3. Generate Prediction ID (e.g., P26-0001)
-        const lastUser = await User.findOne({}, {}, { sort: { 'predictionId': -1 } });
-        let newIdNumber = 1;
-        if (lastUser && lastUser.predictionId) {
-            const lastIdParts = lastUser.predictionId.split('-');
-            if (lastIdParts.length === 2 && !isNaN(lastIdParts[1])) {
-                newIdNumber = parseInt(lastIdParts[1], 10) + 1;
-            }
-        }
-        const predictionId = `P26-${String(newIdNumber).padStart(4, '0')}`;
-
-        // 4. Save User
-        const user = await User.create({
-            predictionId,
-            name,
-            email,
-            phone,
-            course,
-            semester,
-            batch
-        });
-
-        res.status(201).json({
-            success: true,
-            data: {
-                predictionId: user.predictionId,
-                name: user.name
-            }
-        });
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: 'Server Error' });
-    }
+    return res.status(403).json({
+        success: false,
+        message: "Registration has been closed."
+    });
 };
 
 // @desc    Auth admin & get token

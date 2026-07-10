@@ -22,7 +22,6 @@ const Navbar = () => {
   const links = [
     { name: 'Home', path: ROUTES.HOME },
     { name: 'Learn More', path: ROUTES.LEARN_MORE },
-    ...(!hasRegistered ? [{ name: 'Register', path: ROUTES.REGISTER }] : []),
     ...(hasRegistered ? [{ name: 'Predict', path: ROUTES.PREDICT }] : [])
   ];
 
