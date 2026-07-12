@@ -32,6 +32,9 @@ const Button = ({
   } else if (variant === 'success') {
     // Used in Learn More CTA
     baseClasses += "w-full sm:w-auto px-10 py-4 bg-[#00C853] hover:bg-[#00E676] text-black text-lg rounded-full shadow-[0_0_20px_rgba(0,200,83,0.4)] hover:shadow-[0_0_30px_rgba(0,200,83,0.6)] hover:-translate-y-1 group";
+  } else if (variant === 'insights-special') {
+    // Highly attractive glowing button for Insights
+    baseClasses += "relative overflow-hidden w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-[#E31E24] via-[#0057D9] to-[#00C853] text-white text-lg rounded-full shadow-[0_0_20px_rgba(0,87,217,0.6)] hover:shadow-[0_0_40px_rgba(0,200,83,0.8)] hover:-translate-y-1 animate-pulse hover:animate-none border border-white/20";
   }
 
   const combinedClasses = `${baseClasses} ${disabled || isLoading ? 'opacity-50 cursor-not-allowed' : ''} ${className}`;

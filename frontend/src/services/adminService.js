@@ -18,3 +18,11 @@ export const deleteParticipant = async (id, token) => {
   });
   return response.data;
 };
+
+export const exportParticipantsData = async (token) => {
+  const response = await apiClient.get('/api/admin/export', {
+    headers: { Authorization: `Bearer ${token}` },
+    responseType: 'blob'
+  });
+  return response;
+};

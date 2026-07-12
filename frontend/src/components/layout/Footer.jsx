@@ -2,7 +2,7 @@ import { FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="mt-5 bg-[#050a17]/90 backdrop-blur-lg pt-16 pb-8 border-t border-[#1c2541] relative overflow-hidden">
+    <footer className=" bg-[#050a17]/90 backdrop-blur-lg pt-16 pb-8 border-t border-[#1c2541] relative overflow-hidden">
       {/* Decorative background glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-32 bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
 

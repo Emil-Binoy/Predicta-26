@@ -11,10 +11,12 @@ const AdminDashboard = () => {
     isLoggingIn,
     participants,
     isLoading,
+    isExporting,
     handleLogin,
     handleLogout,
     fetchParticipants,
-    handleDelete
+    handleDelete,
+    handleExport
   } = useAdmin();
 
   useEffect(() => {
@@ -37,11 +39,25 @@ const AdminDashboard = () => {
 
   return (
     <div className="pt-24 pb-12 min-h-screen px-4 md:px-8 max-w-7xl mx-auto relative overflow-hidden">
-      <div className="flex justify-between items-center mb-8 relative z-10">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8 relative z-10 gap-4 md:gap-0">
         <h1 className="text-3xl md:text-4xl font-bold text-gradient">Admin Dashboard</h1>
-        <Button variant="danger-outline" onClick={handleLogout}>
-          Logout
-        </Button>
+        <div className="flex gap-4">
+          <Button variant="gold" onClick={handleExport} isLoading={isExporting}>
+            {isExporting ? (
+              'Exporting participants...'
+            ) : (
+              <span className="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+                Export Participants
+              </span>
+            )}
+          </Button>
+          <Button variant="danger-outline" onClick={handleLogout}>
+            Logout
+          </Button>
+        </div>
       </div>
 
       <GlassCard className="p-6 overflow-x-auto relative z-10">

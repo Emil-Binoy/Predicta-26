@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { toast } from 'react-hot-toast';
-import { loginAdmin, getParticipants, deleteParticipant } from '../services/adminService';
+import { loginAdmin, getParticipants, deleteParticipant, exportParticipantsData } from '../services/adminService';
 import { getStorageItem, setStorageItem, removeStorageItem } from '../utils/storage';
 import { STORAGE_KEYS } from '../constants/storageKeys';
 
@@ -9,6 +9,7 @@ export const useAdmin = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [participants, setParticipants] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   const handleLogin = async (username, password) => {
     setIsLoggingIn(true);
@@ -61,14 +62,50 @@ export const useAdmin = () => {
     }
   };
 
+  const handleExport = async () => {
+    if (!token) return;
+    setIsExporting(true);
+    const toastId = toast.loading('Exporting participants...');
+    try {
+      const response = await exportParticipantsData(token);
+      
+      const contentDisposition = response.headers['content-disposition'];
+      let filename = 'Participants.xlsx';
+      if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(/filename=(.+)/);
+        if (filenameMatch && filenameMatch.length === 2) {
+            filename = filenameMatch[1];
+        }
+      }
+      
+      const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+      
+      toast.success('Participants exported successfully.', { id: toastId });
+    } catch (error) {
+      toast.error('Failed to export participant data.', { id: toastId });
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   return {
     token,
     isLoggingIn,
     participants,
     isLoading,
+    isExporting,
     handleLogin,
     handleLogout,
     fetchParticipants,
-    handleDelete
+    handleDelete,
+    handleExport
   };
 };

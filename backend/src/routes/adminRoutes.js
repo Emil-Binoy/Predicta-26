@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getParticipants, getDashboardStats, setMatchResult, getWinners, getAnalytics, deleteParticipant } = require('../controllers/adminController');
+const { exportParticipants } = require('../controllers/adminExportController');
 const { protect } = require('../middleware/authMiddleware');
 
 router.use(protect); // All routes below are protected
@@ -11,5 +12,6 @@ router.get('/dashboard', getDashboardStats);
 router.post('/match-result', setMatchResult);
 router.get('/winners', getWinners);
 router.get('/analytics', getAnalytics);
+router.get('/export', exportParticipants);
 
 module.exports = router;

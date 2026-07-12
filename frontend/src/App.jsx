@@ -14,6 +14,7 @@ const Registration = React.lazy(() => import('./pages/Registration/Registration'
 const Prediction = React.lazy(() => import('./pages/Prediction/Prediction'));
 const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard/AdminDashboard'));
 const LearnMore = React.lazy(() => import('./pages/LearnMore/LearnMore'));
+const Insights = React.lazy(() => import('./pages/Insights/Insights'));
 
 // Loading Fallback Component
 const PageLoader = () => (
@@ -59,6 +60,7 @@ function App() {
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path={ROUTES.HOME} element={<Home />} />
+              <Route path={ROUTES.INSIGHTS} element={<Insights />} />
               <Route path={ROUTES.LEARN_MORE} element={<LearnMore />} />
               <Route path={ROUTES.REGISTER} element={<Registration />} />
               <Route path={ROUTES.PREDICT} element={<Prediction />} />
