@@ -92,7 +92,8 @@ const PredictionInsights = () => {
   } = stats;
 
   const barData = teamPopularity.map((item) => ({
-    name: `${getFlagEmoji(item.team)} ${item.team}`,
+    name: getFlagEmoji(item.team),
+    teamName: item.team,
     count: item.count,
     percentage: item.percentage,
   }));
@@ -186,12 +187,23 @@ const PredictionInsights = () => {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={barData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" vertical={false} />
-                <XAxis dataKey="name" tick={{ fill: '#B5B5B5', fontSize: 12 }} axisLine={false} tickLine={false} />
+                <XAxis 
+                  dataKey="name" 
+                  tick={{ fill: '#B5B5B5', fontSize: 20 }} 
+                  axisLine={false} 
+                  tickLine={false} 
+                />
                 <YAxis tick={{ fill: '#B5B5B5', fontSize: 12 }} axisLine={false} tickLine={false} />
                 <Tooltip
                   cursor={{ fill: 'rgba(255,255,255,0.05)' }}
                   contentStyle={{ backgroundColor: '#1D1D1D', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '8px' }}
                   itemStyle={{ color: '#fff' }}
+                  labelFormatter={(label, payload) => {
+                    if (payload && payload.length > 0) {
+                      return `${label} ${payload[0].payload.teamName}`;
+                    }
+                    return label;
+                  }}
                 />
                 <Bar dataKey="count" fill="#E31E24" radius={[4, 4, 0, 0]} animationDuration={1500} />
               </BarChart>
